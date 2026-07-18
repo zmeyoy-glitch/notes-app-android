@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NotesApp</string>
+    <string name="title_activity_main">Интервальное приложение для заметок (17:00 - 20:00)</string>
+    <string name="hint_title">Заголовок заметки</string>
+    <string name="hint_content">Содержание заметки</string>
+    <string name="btn_save">Сохранить заметку</string>
+    <string name="tv_time_hint">Выберите время начала заметки</string>
+    <string name="tv_instructions">Шаг интервала: 15 минут\nВведите заголовок и содержание заметки, затем нажмите \'Сохранить\'</string>
+    <string name="tv_notes_count">Всего заметок:</string>
+    <string name="interval_1700">17:00</string>
+    <string name="interval_2000">20:00</string>
+</resources>
