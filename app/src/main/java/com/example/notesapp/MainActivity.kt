@@ -1,127 +1,133 @@
 package com.example.notesapp
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notesapp.data.Note
-import com.example.notesapp.data.NotesRepository
-import java.util.Date
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var prefs: SharedPreferences
+    private val PREFS_NAME = "notes_prefs"
+    private val KEY_SELECTED_TIME = "selected_time"
+    private val KEY_NOTES = "notes_list"
     
-    private lateinit var repository: NotesRepository
-    private lateinit var etTitle: EditText
-    private lateinit var etContent: EditText
-    private lateinit var btnSave: Button
-    private lateinit var tvTime: TextView
+    // Конфигурация времени
+    private val START_HOUR = 17
+    private val END_HOUR = 20
+    private val STEP_MINUTES = 15
     
+    // Форматирование времени
+    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        
+        // Настройка окна на весь экран
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.isAppearanceLightStatusBars = true
+        
         setContentView(R.layout.activity_main)
-        
-        repository = NotesRepository(this)
-        
+
+        // Инициализация UI элементов
         initViews()
-        updateIntervalDisplay()
+        
+        // Загрузка сохраненных данных
+        loadSavedData()
     }
-    
+
     private fun initViews() {
-        etTitle = findViewById(R.id.et_title)
-        etContent = findViewById(R.id.et_content)
-        btnSave = findViewById(R.id.btn_save)
-        tvTime = findViewById(R.id.tv_time)
+        val tvTimeHint = findViewById<TextView>(R.id.tv_time_hint)
+        val btnSelectTime = findViewById<Button>(R.id.btn_select_time)
+        val tvNotesCount = findViewById<TextView>(R.id.tv_notes_count)
         
-        btnSave.setOnClickListener {
-            saveNote()
+        // Генерация списка времени с шагом 15 минут от 17:00 до 20:00
+        val timeOptions = generateTimeOptions()
+        
+        // Отображение количества доступных временных интервалов
+        tvNotesCount.text = "Доступные интервалы: ${timeOptions.size}"
+        tvTimeHint.text = "Выберите время начала интервала"
+
+        btnSelectTime.setOnClickListener {
+            showTimePickerDialog(timeOptions)
         }
     }
-    
-    private fun updateIntervalDisplay() {
-        val intervalMinutes = repository.getIntervalTime()
-        if (intervalMinutes > 0) {
-            val timeString = intervalMinutes.toIntervalString()
-            tvTime.text = "Текущий интервал: $timeString"
-        } else {
-            tvTime.text = "Выберите время начала заметки"
-        }
-    }
-    
-    private fun saveNote() {
-        val title = etTitle.text.toString().trim()
-        val content = etContent.text.toString().trim()
+
+    private fun generateTimeOptions(): List<String> {
+        val times = mutableListOf<String>()
         
-        if (title.isEmpty()) {
-            Toast.makeText(this, "Введите заголовок", Toast.LENGTH_SHORT).show()
-            return
-        }
-        
-        val intervalMinutes = repository.getIntervalTime()
-        if (intervalMinutes <= 0) {
-            Toast.makeText(this, "Сначала выберите время интервала", Toast.LENGTH_SHORT).show()
-            return
+        // Генерируем время с шагом 15 минут от 17:00 до 20:00
+        var currentHour = START_HOUR
+        while (currentHour < END_HOUR) {
+            for (minute in 0..STEP_MINUTES until 60 step STEP_MINUTES) {
+                val timeStr = String.format("%02d:%02d", currentHour, minute)
+                times.add(timeStr)
+            }
+            
+            // Переход к следующему часу
+            if (currentHour < END_HOUR - 1) {
+                currentHour++
+            } else {
+                break
+            }
         }
         
-        val note = Note.createNote(title, content, intervalMinutes)
+        return times
+    }
+
+    private fun showTimePickerDialog(timeOptions: List<String>) {
+        val selectedTime = prefs.getString(KEY_SELECTED_TIME, "") ?: timeOptions.first()
         
-        // Сохраняем заметку в репозиторий
-        val currentNotes = repository.getNotes()
-        val updatedNotes = currentNotes + note
-        repository.saveNotes(updatedNotes)
+        // Простой диалог выбора времени (можно заменить на TimePicker)
+        android.app.AlertDialog.Builder(this)
+            .setTitle("Выберите время")
+            .setSingleChoiceItems(timeOptions.toTypedArray(), -1) { _, position, _ ->
+                val selected = timeOptions[position]
+                prefs.edit().putString(KEY_SELECTED_TIME, selected).apply()
+                
+                // Сохраняем текущую заметку с выбранным временем
+                saveCurrentNoteWithTime(selected)
+            }
+            .setPositiveButton("OK") { _, _ -> }
+            .show()
+    }
+
+    private fun loadSavedData() {
+        val notes = prefs.getString(KEY_NOTES, "[]") ?: "[]"
         
-        Toast.makeText(this, "Заметка сохранена!", Toast.LENGTH_SHORT).show()
+        // Здесь можно добавить логику загрузки заметок из SharedPreferences
+        // и отображения их в UI (например, в RecyclerView)
+    }
+
+    private fun saveCurrentNoteWithTime(time: String) {
+        // Сохраняем текущую заметку с выбранным временем
+        val noteData = JSONObject()
         
-        etTitle.setText("")
-        etContent.setText("")
+        try {
+            noteData.put("time", time)
+            noteData.put("timestamp", System.currentTimeMillis())
+            
+            // Здесь можно добавить сохранение заголовка и контента заметки
+            // если они уже были введены пользователем
+            
+            prefs.edit().putString(KEY_NOTES, noteData.toString()).apply()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
-    
-    private fun getAllNotes(): List<Note> {
-        return repository.getNotes()
-    }
-}
 
-// Расширения для работы с интервалами времени
-fun Int.toIntervalString(): String {
-    val hours = this / 60
-    val minutes = this % 60
-    
-    // Нормализация к диапазону 17:00 - 20:00 (90 минут)
-    val normalizedMinutes = this % 90
-    
-    return when {
-        normalizedMinutes == 0 -> "17:00"
-        normalizedMinutes < 60 -> "${hours}:${minutes.toString().padStart(2, '0')}"
-        else -> "${hours + 1}:${(normalizedMinutes - 60).toString().padStart(2, '0')}"
+    override fun onResume() {
+        super.onResume()
+        loadSavedData()
     }
-}
-
-fun Int.toIntervalStringDetailed(): String {
-    val hours = this / 60
-    val minutes = this % 60
-    
-    // Диапазон 17:00-20:00 с шагом 15 минут (90 интервалов)
-    return when {
-        this == 0 -> "17:00"
-        this in 1..45 -> "${hours}:${minutes.toString().padStart(2, '0')}"
-        else -> "${hours + 1}:${(this - 60).toString().padStart(2, '0')}"
-    }
-}
-
-fun Int.getIntervalDescription(): String {
-    val hours = this / 60
-    val minutes = this % 60
-    
-    return when (this) {
-        0 -> "17:00"
-        in 1..45 -> "${hours}:${minutes.toString().padStart(2, '0')}"
-        else -> "${hours + 1}:${(this - 60).toString().padStart(2, '0')}"
-    }
-}
-
-fun Int.isValidInterval(): Boolean {
-    return this in 0..89 // 90 интервалов от 17:00 до 20:00 включительно
 }
