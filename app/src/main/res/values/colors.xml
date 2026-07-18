@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="primary">#6200EE</color>
-    <color name="primary_dark">#3700B3</color>
-    <color name="accent">#03DAC5</color>
-    <color name="background_light">#F5F5F5</color>
-    <color name="surface_light">#FFFFFF</color>
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#757575</color>
+    <!-- Основные цвета -->
+    <color name="primary">#007AFF</color>
+    <color name="primary_dark">#0056CC</color>
+    <color name="primary_light">#A3CFFF</color>
+    
+    <color name="secondary">#FF2D80</color>
+    <color name="secondary_dark">#C41F73</color>
+    <color name="secondary_light">#FF9ACD</color>
+    
+    <!-- Цвета текста -->
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#666666</color>
+    <color name="text_tertiary">#999999</color>
+    
+    <!-- Фон и поверхности -->
+    <color name="background_light">#F8F9FA</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    
+    <!-- Акцентные цвета -->
+    <color name="accent_green">#34C759</color>
+    <color name="accent_red">#FF3B30</color>
+    <color name="accent_yellow">#FFCC00</color>
+    
+    <!-- Индикаторы состояния -->
+    <color name="success">#34C759</color>
+    <color name="error">#FF3B30</color>
+    <color name="warning">#FFCC00</color>
+    
+    <!-- Градиенты и эффекты -->
+    <color name="gradient_start">#007AFF</color>
+    <color name="gradient_end">#5856D6</color>
+    
+    <!-- Карточки и контейнеры -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_stroke">#E5E5EA</color>
+    
+    <!-- Иконки -->
+    <color name="icon_primary">#333333</color>
+    <color name="icon_secondary">#666666</color>
 </resources>
