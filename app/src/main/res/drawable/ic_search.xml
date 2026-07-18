@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    
+    <!-- Кнопка поиска (лупа) -->
+    <path
+        android:fillColor="#007AFF"
+        android:pathData="M15.5,14h-0.79l-5.5,-5.5C6.5,8 6,7.5 6,7c0,-0.5 0.5,-1 1,-1 0.5,0 1,0.5 1.36,0.64L14,9.21l3.64,-3.64C18.1,5.25 18.5,5.75 18.5,6.5c0,0.5 -0.5,1 -0.64,1.36L15.5,11h0.79l5.5,5.5C20.5,17 21,17.5 21,18c0,0.5 -0.5,1 -1,1 -0.5,0 -1,-0.5 -1.36,-0.64L14.64,15H13.95l-5.5,-5.5C7.5,9 7,8.5 7,8c0,-0.5 0.5,-1 1,-1 0.5,0 1,0.5 1.36,0.64L12.64,11H13.33l5.5,5.5C19.5,17 20,17.5 20,18c0,0.5 -0.5,1 -1,1 -0.5,0 -1,-0.5 -1.36,-0.64L15.5,14z"/>
+    
+</vector>
