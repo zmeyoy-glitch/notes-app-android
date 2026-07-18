@@ -1,70 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/background_light">
 
+    <!-- Заголовок с названием приложения -->
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Интервальное приложение для заметок (17:00 - 20:00)"
-        android:textSize="24sp"
+        android:text="@string/app_name"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        android:textColor="@color/text_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="48dp"/>
 
+    <!-- Подзаголовок с описанием -->
     <TextView
-        android:id="@+id/tv_time"
+        android:id="@+id/tv_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Выберите время начала заметки"
-        android:textSize="16sp"
-        android:layout_marginBottom="24dp"/>
+        android:text="Заметки на вечер (17:00 - 20:00)"
+        android:textSize="18sp"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintTop_toBottomOf="@id/tv_app_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
 
-    <TextView
-        android:id="@+id/tv_instructions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Шаг интервала: 15 минут\nВведите заголовок и содержание заметки, затем нажмите 'Сохранить'"
-        android:textSize="14sp"
-        android:padding="8dp"
-        android:background="#F0F0F0"
-        android:layout_marginBottom="24dp"/>
-
-    <EditText
-        android:id="@+id/et_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Заголовок заметки"
-        android:textSize="16sp"
-        android:inputType="textCapSentences"
-        android:padding="12dp"/>
-
-    <EditText
-        android:id="@+id/et_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="150dp"
-        android:hint="Содержание заметки"
-        android:textSize="16sp"
-        android:inputType="textMultiLine"
-        android:padding="12dp"/>
-
+    <!-- Кнопка выбора времени -->
     <Button
-        android:id="@+id/btn_save"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_select_time"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Сохранить заметку"
-        android:textSize="16sp"
-        android:padding="12dp"/>
+        android:text="Выбрать время"
+        android:textSize="18sp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        app:backgroundTint="@color/primary"
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"/>
 
+    <!-- Подсказка о времени -->
+    <TextView
+        android:id="@+id/tv_time_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Доступные интервалы: 17:00, 17:15, 17:30, 17:45, 18:00..."
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintTop_toBottomOf="@id/btn_select_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Счетчик заметок -->
     <TextView
         android:id="@+id/tv_notes_count"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Всего заметок: 0"
-        android:textSize="14sp"
-        android:paddingTop="8dp"/>
+        android:text="Доступные интервалы: 8"
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintTop_toBottomOf="@id/tv_time_hint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
 
-</LinearLayout>
+    <!-- Индикатор сохранения -->
+    <TextView
+        android:id="@+id/tv_save_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Данные сохраняются автоматически"
+        android:textSize="14sp"
+        android:textColor="@color/primary_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
