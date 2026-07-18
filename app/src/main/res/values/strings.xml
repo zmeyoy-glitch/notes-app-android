@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NotesApp</string>
+    <string name="app_name">Notes App</string>
     <string name="title_activity_main">Главная</string>
-    <string name="hint_title">Заголовок заметки</string>
-    <string name="hint_content">Содержание заметки</string>
-    <string name="btn_save">Сохранить заметку</string>
-    <string name="tv_time_hint">Выберите время начала интервала</string>
-    <string name="tv_notes_count">Всего заметок: 0</string>
-    <string name="interval_step">Шаг интервала: 15 минут</string>
-    <string name="time_range">Диапазон времени: 17:00 - 20:00</string>
-    <string name="toast_no_title">Введите заголовок заметки</string>
-    <string name="toast_no_interval">Сначала выберите время интервала</string>
-    <string name="toast_saved">Заметка сохранена!</string>
+    
+    <!-- Тексты для UI -->
     <string name="btn_select_time">Выбрать время</string>
+    <string name="tv_app_title">Заметки на вечер</string>
+    <string name="tv_subtitle">Интервалы с 17:00 до 20:00</string>
+    <string name="tv_save_status">Данные сохраняются автоматически в память телефона</string>
+    
+    <!-- Цвета и стили -->
+    <string name="text_primary">#333333</string>
+    <string name="text_secondary">#666666</string>
+    <string name="primary">#007AFF</string>
+    <string name="primary_dark">#0056CC</string>
+    <string name="background_light">#F8F9FA</string>
+    
+    <!-- О времени -->
+    <string name="time_range">17:00 - 20:00</string>
+    <string name="step_minutes">с шагом 15 минут</string>
 </resources>
